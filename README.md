@@ -9,7 +9,9 @@ source bin/activate
 pip install -r requirements.txt
 ```
 ```
-./run.sh
+# ./run.sh
+export FLASK_APP=app
+flask run
 ```
 ```
 python py-apps/main.py
