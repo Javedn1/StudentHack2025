@@ -6,7 +6,7 @@
 <generic-web-testing version="1.0">
     <!-- comma-separated, in testing order, case-insensitive -->
     <!-- Chrome/Edge/Firefox/Safari -->
-    <webforms useragents="Chrome,Firefox,Edge">
+    <webforms useragents="Chrome,Firefox">
         <!-- formid means the id of <form>, not the id of <webform> -->
         <webform url="https://mdn.github.io/dom-examples/indexeddb-api/index.html" formid="register-form" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
             <fieldset>

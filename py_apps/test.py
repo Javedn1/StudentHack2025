@@ -1,8 +1,8 @@
 """
 The class for <test>
 """
-from step import Step
-from expectation import Expectation
+from .step import Step
+from .expectation import Expectation
 
 
 class Test:

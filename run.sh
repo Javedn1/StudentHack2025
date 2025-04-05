@@ -1,1 +1,1 @@
-python3 py-apps/main.py
+python3 py_apps/main.py

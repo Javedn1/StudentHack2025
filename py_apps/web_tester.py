@@ -13,12 +13,12 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 import lxml
-from field import Field
-from test import Test
-from step import Step
-from expectation import Expectation
-from webform import Webform
-from message import Message
+from .field import Field
+from .test import Test
+from .step import Step
+from .expectation import Expectation
+from .webform import Webform
+from .message import Message
 import time
 
 

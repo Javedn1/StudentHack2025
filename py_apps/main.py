@@ -1,7 +1,7 @@
 """
 The main programme that invokes functions in WebTester
 """
-from web_tester import WebTester
+from .web_tester import WebTester
 from bs4 import BeautifulSoup
 
 """
@@ -31,11 +31,13 @@ def read_xml_file_paths():
 
     for cf in configuration_files:
         xml_file_paths.append(cf.text)
+    
+    return xml_file_paths
 
 
 if __name__ == "__main__":
     # Read web-testing-config.xml
-    read_xml_file_paths()
+    xml_file_paths = read_xml_file_paths()
 
     # Run the code
     # Multiple case
