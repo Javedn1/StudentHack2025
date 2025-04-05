@@ -10,7 +10,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route("/test")
+# TODO: Remove GET
+@app.route("/test", methods=["POST", "GET"])
 def test():
     # Read web-testing-config.xml
     xml_file_paths = read_xml_file_paths()
