@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Created on 5/2/2024 by w45242hy
-    Last-edit: 17/2/2024 by w45242hy
     The xml file for all testings of the website testhtmlform.html
 -->
 <!DOCTYPE generic-web-testing SYSTEM "web-testing.dtd">

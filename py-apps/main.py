@@ -12,7 +12,7 @@ xml_file_paths = []
 """
 The file path of the xml file which contains all the testings and details for 1 website
 """
-xml_file_path = "xml-docs/web-testing-epublication.xml"
+# xml_file_path = "xml-docs/web-testing-epublication.xml"
 # xml_file_path = "xml-docs/web-testing-testhtmlform.xml"
 
 
