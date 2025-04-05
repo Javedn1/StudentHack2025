@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Created on 8/2/2024 by w45242hy
+    Last-edit: 8/2/2024 by w45242hy
+    The xml file storing all the file paths of xml files to be read by web tester
+-->
+<configuration-files>
+    <!--  can contain different file path -->
+    <configuration-file>xml-docs/web-testing-epublication.xml</configuration-file>
+    <!-- etc -->
+</configuration-files>

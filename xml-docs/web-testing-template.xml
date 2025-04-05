@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Created on 5/2/2024 by w45242hy
+    Last-edit: 2/3/2024 by w45242hy
+    The tempalte xml file for all xml testing files
+-->
+<!DOCTYPE generic-web-testing SYSTEM "web-testing.dtd">
+<generic-web-testing version="1.0">
+    <!-- comma-separated, in testing order, case-insensitive -->
+    <!-- Chrome/Edge/Firefox/Safari -->
+    <webforms useragents="Chrome,Edge,Firefox,Safari">
+        <!-- formid means the id of <form>, not the id of <webform> -->
+        <webform url="" formid="" timeout="0" submissiontimeout="0"><!-- browsers or browser? -->
+            <fieldset>
+                <field id="" name="" class="" xpath="" type="" value="" defaultindex="" defaultvalue="">Default text</field>
+            </fieldset>
+            <tests>
+                <!-- description: compulsory, general, submission -->
+                <!-- run: true/false -->
+                <test id="1" description="" run="" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="" key="" value="" />
+                    <expectation formsubmission="false">
+                        <!-- language: language of value in <message>, i.e. the value to be compared -->
+                        <!-- If the language in <message> does not match that of browser, skip the checkings -->
+                        <!-- type: attribute/text -->
+                        <message accessby="" key="" language="en" type="">Value to be compared</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+    </webforms>
+</generic-web-testing>

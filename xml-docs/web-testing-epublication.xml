@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Created on 17/2/2024 by w45242hy
+    Last-edit: 2/3/2024 by w45242hy
+    The xml file for all testings of the website epublication.html
+-->
+<!DOCTYPE generic-web-testing SYSTEM "web-testing.dtd">
+<generic-web-testing version="1.0">
+    <!-- comma-separated, in testing order, case-insensitive -->
+    <!-- Chrome/Edge/Firefox/Safari -->
+    <webforms useragents="Chrome,Firefox,Edge">
+        <!-- formid means the id of <form>, not the id of <webform> -->
+        <webform url="https://mdn.github.io/dom-examples/indexeddb-api/index.html" formid="register-form" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <field id="pub-title" name="pub-title" type="text"></field>
+                <field id="pub-biblioid" name="pub-biblioid" type="text"></field>
+                <field id="pub-year" name="pub-year" type="number"></field>
+                <field id="add-button" type="button"></field>
+                <field xpath="//div[@id='msg']/span[1]" type="text"></field>
+            </fieldset>
+            <tests>
+                <!-- description: compulsory, general, submission -->
+                <test id="1" description="general test: no title and biblioid" run="true" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="id" key="pub-title" value="Test Title" />
+                    <step accessby="id" key="pub-biblioid" value="Test Biblioid" />
+                    <expectation formsubmission="false">
+                        <message accessby="id" key="pub-title" language="en" type="attribute">Test Title</message>
+                        <message accessby="id" key="pub-biblioid" language="en" type="attribute">Test Biblioid</message>
+                    </expectation>
+                </test>
+                <!-- description: compulsory, general, submission -->
+                <test id="2" description="compulsory test: no title and biblioid" run="true" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="id" key="pub-title" value="" />
+                    <step accessby="id" key="pub-biblioid" value="" />
+                    <step accessby="id" key="add-button" value="" />
+                    <expectation formsubmission="false">
+                        <message accessby="class" key="action-failure" language="en" type="text">Failure: Required field(s) missing</message>
+                        <message accessby="xpath" key="//div[@id='msg']/span[1]" language="en" type="text">Failure: Required field(s) missing</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+    </webforms>
+</generic-web-testing>

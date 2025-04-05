@@ -172,3 +172,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Self-defined
+# Mac
+.DS_Store
+# Venv
+venv/
+bin/
+lib/
+pyvenv.cfg

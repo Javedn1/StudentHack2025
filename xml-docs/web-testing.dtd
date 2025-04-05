@@ -1,0 +1,4 @@
+<!DOCTYPE generic-web-testing
+[
+<!ELEMENT generic-web-testing (test-platforms, webforms, webform, fieldset, field, tests, test, step, expectation, message)>
+]>
