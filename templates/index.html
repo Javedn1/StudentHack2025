@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>StudentHack 2025</title>
 </head>
 <body>
    <h1>Web Tester</h1>
    <p>An app to automate your web development and testing</p>
-   <p>Feeling tired of writing your own configuration file? Get a template file or create your own file <a href="./build_xml" target="_blank">here</a></p>
+   <p>Feeling tired of writing your own configuration file? Get a template file <a href="./template_file/template.xml" target="_blank">here</a> or create your own file <a href="./build_xml" target="_blank">here</a></p>
    
    <h2>Upload XML Files</h2>
    <form action="/run_test" method="POST" enctype="multipart/form-data">

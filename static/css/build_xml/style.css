@@ -85,7 +85,7 @@ pre {
 
 /* Basic reset for buttons */
 .btn {
-    background: linear-gradient(45deg, #0a74da, #ff7a18); /* Gradient background */
+    background: linear-gradient(45deg, #0a74da, #10ad5c); /* Gradient background */
     color: white;
     border: 2px solid transparent;
     border-radius: 50px; /* Rounded corners */
@@ -118,7 +118,7 @@ pre {
 }
 
 .btn:hover {
-    background: linear-gradient(45deg, #ff7a18, #0a74da); /* Reverse gradient on hover */
+    background: linear-gradient(45deg, #10ad5c, #0a74da); /* Reverse gradient on hover */
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     transform: translateY(-4px); /* Slightly lift the button on hover */
 }
