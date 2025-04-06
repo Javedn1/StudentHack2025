@@ -82,7 +82,7 @@ def run_test():
         contents=contents,
         config=generate_content_config,
     ):
-        print(chunk.text, end="")
+        print(f"chunk_test: {chunk.text}", end="")
         ai_response += chunk.text
 
     return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message=ai_response)
