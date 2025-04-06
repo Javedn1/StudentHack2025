@@ -16,10 +16,13 @@ def test():
     # Read web-testing-config.xml
     xml_file_paths = read_xml_file_paths()
 
+    web_tester_json_outputs = []
+
     # Run the code
     # Multiple case
     for xml_file_path in xml_file_paths:
         web_tester = WebTester(xml_file_path)
         web_tester.run()
+        web_tester_json_outputs.append(web_tester.get_json())
 
-    return "Test run"
+    return str(web_tester_json_outputs)

@@ -64,8 +64,24 @@ class WebTester:
         """
         self.__start_time = 0
 
+        self.__json_output = {
+            "xml_config": {}, 
+            "errors": [], 
+            "test_result": {
+                "webform": {}
+            }, 
+            "stats": {
+                "test_num": -1, 
+                "test_failure_num": -1, 
+                "test_error_num": -1, 
+                "test_skipped_num": -1
+            }, 
+            "total_time": -1, 
+            "finished_at": -1
+        }
+
     @staticmethod
-    def log(mode=1, message=""):
+    def log(mode=1, message="", enabled=False):
         """
         Log/Print out the message with the corresponding mode
         Mode: 
@@ -74,6 +90,9 @@ class WebTester:
         2 - [TEST]
         3 - [EXPECTATION]
         """
+        if not enabled:
+            return
+
         # The final message to be printed
         log_message = ""
         if mode == 0:
@@ -118,6 +137,7 @@ class WebTester:
                 1, "-----------------< web_tester:web_tester >-----------------")
             WebTester.log(1, f"xml file path: {self.__file_path}")
             WebTester.log()
+            self.__json_output["xml_file_path"] = self.__file_path
 
             with open(self.__file_path, "r") as f:
                 file = f.read()  # Read the file
@@ -125,6 +145,7 @@ class WebTester:
             xml_reader = BeautifulSoup(file, "xml")
         except Exception as e:
             WebTester.log(0, f"Error in reading file: {e}")
+            self.__json_output["errors"].append(f"Error in reading file: {e}")
 
         self.__browsers = WebTester.extract_from_tag(
             xml_reader.find("webforms"), "useragents").split(",")  # Ensure self.__browsers is a list rather than a String
@@ -189,6 +210,7 @@ class WebTester:
                 self.__webforms.append(webform)
             except Exception as e:
                 WebTester.log(0, f"Error in read_xml_config(): {e}")
+                self.__json_output["errors"].append(f"Error in read_xml_config(): {e}")
 
     def fill_web(self):
         """
@@ -268,6 +290,7 @@ class WebTester:
                                 # might update this as the programme improves and adds more identifier
                                 WebTester.log(
                                     0, f"Invalid <step> access_by: {step.access_by}")
+                                self.__json_output["errors"].append(f"Invalid <step> access_by: {step.access_by}")
                                 test_error_num += 1
 
                             element = self.__web_driver.find_element(
@@ -346,14 +369,23 @@ class WebTester:
                                 WebTester.log(
                                     1, "=================== [Test Result] ===================")
                                 WebTester.log(2, f"webform.url: {webform.url}")
+                                self.__json_output["test_result"]["webform"]["url"] = webform.url
                                 WebTester.log(
                                     2, f"webform.form_id: {webform.form_id}")
+                                self.__json_output["test_result"]["webform"]["form_id"] = webform.form_id
                                 WebTester.log(2, f"webform.browser: {browser}")
+                                self.__json_output["test_result"]["webform"]["browser"] = browser
                                 WebTester.log(2, f"test_id = {test.test_id}")
+                                self.__json_output["test_result"]["test_id"] = test.test_id
 
                                 if message.message_type == "text":
                                     WebTester.log(
                                         2, f"Test passed: {message.value == element.text}")
+                                    self.__json_output["test_result"]["message_type"] = "text"
+                                    self.__json_output["test_result"]["test_passed"] = message.value == element.text
+                                    self.__json_output["test_result"]["expected_value"] = element.text
+                                    self.__json_output["test_result"]["actual_value"] = message.value
+                                    self.__json_output["test_result"]["error_message"] = "null"
 
                                     if message.value != element.text:
                                         # Test failure
@@ -367,6 +399,11 @@ class WebTester:
                                 elif message.message_type == "attribute":
                                     WebTester.log(
                                         2, f"Test passed: {message.value == element.get_attribute('value')}")
+                                    self.__json_output["test_result"]["message_type"] = "attribute"
+                                    self.__json_output["test_result"]["test_passed"] = message.value == element.get_attribute('value')
+                                    self.__json_output["test_result"]["expected_value"] = element.get_attribute('value')
+                                    self.__json_output["test_result"]["actual_value"] = message.value
+                                    self.__json_output["test_result"]["error_message"] = "null"
 
                                     if message.value != element.get_attribute("value"):
                                         # Test failure
@@ -381,6 +418,11 @@ class WebTester:
                                     WebTester.log(2, "Test passed: False")
                                     WebTester.log(
                                         0, f"Invalid message type: {message.message_type}")
+                                    self.__json_output["test_result"]["message_type"] = message.message_type
+                                    self.__json_output["test_result"]["test_passed"] = False
+                                    self.__json_output["test_result"]["expected_value"] = "null"
+                                    self.__json_output["test_result"]["actual_value"] = "null"
+                                    self.__json_output["test_result"]["error_message"] = f"Invalid message type: {message.message_type}"
                                     test_error_num += 1
                                 WebTester.log(
                                     1, "=====================================================")
@@ -394,10 +436,15 @@ class WebTester:
                         WebTester.log(
                             0, f"Error in running <test>. test_id: {test.test_id}")
                         WebTester.log(0, f"Error: {e}")
+                        self.__json_output["errors"].append(f"Error: {e}")
                         continue  # Continue running other <test>
 
                 WebTester.log(
                     2, f"Tests run: {test_num}, Failures: {test_failure_num}, Errors: {test_error_num}, Skipped: {test_skipped_num} - in comp10120_selenium_test.py-apps.web_tester.py")
+                self.__json_output["stats"]["test_num"] = test_num
+                self.__json_output["stats"]["test_failure_num"] = test_failure_num
+                self.__json_output["stats"]["test_error_num"] = test_error_num
+                self.__json_output["stats"]["test_skipped_num"] = test_skipped_num
 
         # The above logic does not close the last web_driver. Thus, we need to close it manually at the end of this function
         self.close_webdriver()
@@ -424,89 +471,139 @@ class WebTester:
         WebTester.log(1, f"Reading SNAPSHOT from {self.__file_path}")
         WebTester.log(
             1, "===================== <xml> =====================")
+        self.__json_output["xml_config"] = {}
+        self.__json_output["xml_config"]["file_path"] = self.__file_path
+        self.__json_output["xml_config"]["webforms"] = []
         for webform in self.__webforms:
             # Print out the <webform> read
             WebTester.log(1)
             WebTester.log(
                 1, "===================== <webform> =====================")
+            webform_json = {}  # For self.__json_output
             WebTester.log(1, f"url = {webform.url}")
+            webform_json["url"] = webform.url
             WebTester.log(1, f"form_id = {webform.form_id}")
+            webform_json["form_id"] = webform.form_id
             WebTester.log(1, f"timeout = {webform.timeout}")
+            webform_json["timeout"] = webform.timeout
             WebTester.log(
                 1, f"submission_timeout = {webform.submission_timeout}")
+            webform_json["submission_timeout"] = webform.submission_timeout
             WebTester.log(1, f"browsers = {webform.browsers}")
+            webform_json["browsers"] = webform.browsers
 
+            webform_json["fields"] = []
             for field in webform.fields:
                 # Print out the <field> read
                 WebTester.log(1)
                 WebTester.log(
                     1, "===================== <field> =====================")
+                field_json = {}
                 WebTester.log(1, f"id = {field.field_id}")
+                field_json["id"] = field.field_id
                 WebTester.log(1, f"name = {field.field_name}")
+                field_json["name"] = field.field_name
                 WebTester.log(1, f"class = {field.field_class}")
+                field_json["class"] = field.field_class
                 WebTester.log(1, f"xpath = {field.field_xpath}")
+                field_json["xpath"] = field.field_xpath
                 WebTester.log(1, f"type = {field.field_type}")
+                field_json["type"] = field.field_type
                 WebTester.log(1, f"value = {field.value}")
+                field_json["value"] = field.value
                 if field.field_type == "radio" or field.field_type == "select-multiple" or field.field_type == "select-one" or field.field_type == "check-box":
                     WebTester.log(
                         1, f"default_index = {field.default_index}")
+                    field_json["default_index"] = field.default_index
                     WebTester.log(
                         1, f"default_value = {field.default_value}")
+                    field_json["default_value"] = field.default_value
+                else:
+                    field_json["default_index"] = "null"
+                    field_json["default_value"] = "null"
                 WebTester.log(1, f"text = {field.text}")
+                field_json["text"] = field.text
                 WebTester.log(
                     1, "=====================================================")
+                webform_json["fields"].append(field_json)
 
+            webform_json["tests"] = []
             for test in webform.tests:
                 # Print out the <test> read
                 WebTester.log(1)
                 WebTester.log(
                     1, "===================== <test> =====================")
+                test_json = {}
                 WebTester.log(1, f"id = {test.test_id}")
+                test_json["id"] = test.test_id
                 WebTester.log(1, f"description = {test.description}")
+                test_json["description"] = test.description
                 WebTester.log(1, f"run = {test.run}")
+                test_json["run"] = test.run
                 WebTester.log(1, f"language = {test.language}")
+                test_json["language"] = test.language
 
+                test_json["steps"] = []
                 for step in test.steps:
                     # Print out the <step> read
                     WebTester.log(1)
                     WebTester.log(
                         1, "===================== <step> =====================")
+                    step_json = {}
                     WebTester.log(1, f"access_by = {step.access_by}")
+                    step_json["access_by"] = step.access_by
                     WebTester.log(1, f"key = {step.key}")
+                    step_json["key"] = step.key
                     WebTester.log(1, f"value = {step.value}")
+                    step_json["value"] = step.value
                     WebTester.log(
                         1, "=====================================================")
+                    test_json["steps"].append(step_json)
 
+                test_json["expectations"] = []
                 for expectation in test.expectations:
                     # Print out the <expectation> read
                     WebTester.log(1)
                     WebTester.log(
                         1, "===================== <expectation> =====================")
+                    expectation_json = {}
                     WebTester.log(1,
                                   f"form_submission = {expectation.form_submission}")
+                    expectation_json["form_submission"] = expectation.form_submission
 
+                    expectation_json["messages"] = []
                     for message in expectation.messages:
                         # Print out the <message> read
                         WebTester.log(1)
                         WebTester.log(
                             1, "===================== <message> =====================")
+                        message_json = {}
                         WebTester.log(
                             1, f"access_by = {message.access_by}")
+                        message_json["access_by"] = message.access_by
                         WebTester.log(1, f"key = {message.key}")
+                        message_json["key"] = message.key
                         WebTester.log(
                             1, f"language = {message.language}")
+                        message_json["language"] = message.language
                         WebTester.log(1,
                                       f"type = {message.message_type}")
+                        message_json["type"] = message.message_type
                         WebTester.log(1, f"value = {message.value}")
+                        message_json["value"] = message.value
 
                         WebTester.log(
                             1, "=====================================================")
+                        expectation_json["messages"].append(message_json)
 
                 WebTester.log(
                     1, "=====================================================")
+                test_json["expectations"].append(expectation_json)
 
             WebTester.log(
                 1, "=====================================================")
+            webform_json["tests"].append(test_json)
+        self.__json_output["xml_config"]["webforms"].append(webform_json)
 
     @staticmethod
     def extract_from_tag(tag, attribute: str) -> str:
@@ -649,6 +746,7 @@ class WebTester:
             except Exception as e:
                 # Could be a real error or not
                 # There might be a chance that the element to be found is only generated after a specific action, e.g. the error message after entering invalid login password, and cannot be found in most situations
+                #TODO: Might need to update self.__output_json here
                 WebTester.log(
                     1, "=====================================================")
                 WebTester.log(
@@ -694,6 +792,7 @@ class WebTester:
             WebTester.log(0, f"Error in init_webdriver(): {e}")
             WebTester.log(
                 1, "=====================================================")
+            self.__json_output["errors"].append(f"Error in init_webdriver(): {e}")
 
     def close_webdriver(self) -> None:
         """
@@ -723,6 +822,16 @@ class WebTester:
             1, "-----------------------------------------------------")
         WebTester.log(
             1, f"Total time: {datetime.datetime.now() - self.__start_time} s")
+        self.__json_output["total_time"] = {datetime.datetime.now() - self.__start_time}
         WebTester.log(1, f"Finished at: {datetime.datetime.now()}")
+        self.__json_output["finished_at"] = datetime.datetime.now()
         WebTester.log(
             1, "-----------------------------------------------------")
+    
+    def get_json(self) -> dict:
+        """
+        Get the json format of the data logged
+
+        :return: The dict object containing the console output
+        """
+        return self.__json_output
