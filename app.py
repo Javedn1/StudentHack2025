@@ -14,9 +14,8 @@ def index():
 def build():
     return render_template("build_xml/index.html")
 
-# TODO: Remove GET
-@app.route("/test", methods=["POST", "GET"])
-def test():
+@app.route("/run_test", methods=["POST"])
+def run_test():
     # Read web-testing-config.xml
     xml_file_paths = read_xml_file_paths()
 

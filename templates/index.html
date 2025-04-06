@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <title>StudentHack 2025</title>
 </head>
 <body>
    <h1>Web Tester</h1>
    <p>An app to automate your web development and testing</p>
    <p>Feeling tired of writing your own configuration file? Get a template file or create your own file here</p>
+   
+   <!-- Form for uploading multiple XML files -->
+   <h2>Upload XML Files</h2>
+   <form action="/run_test" method="POST" enctype="multipart/form-data">
+       <label for="files">Choose XML files:</label>
+       <input type="file" id="files" name="files" accept=".xml" multiple required>
+       <button type="submit">Upload</button>
+   </form>
+   
 </body>
 </html>
