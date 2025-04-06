@@ -137,12 +137,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Handle download functionality
-    document.getElementById('download-xml-btn').addEventListener('click', function () {
+    document.getElementById('copy-xml-btn').addEventListener('click', function () {
         const xml = document.getElementById('generated-xml').textContent;
-        const blob = new Blob([xml], { type: 'application/xml' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'generated-config.xml';
-        link.click();
+        alert(`XML content copied! `);
+        navigator.clipboard.writeText(xml);
     });
 });
