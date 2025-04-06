@@ -385,7 +385,7 @@ class WebTester:
                                     self.__json_output["test_result"]["test_passed"] = message.value == element.text
                                     self.__json_output["test_result"]["expected_value"] = element.text
                                     self.__json_output["test_result"]["actual_value"] = message.value
-                                    self.__json_output["test_result"]["error_message"] = "null"
+                                    self.__json_output["test_result"]["error_message"] = ""
 
                                     if message.value != element.text:
                                         # Test failure
@@ -403,7 +403,7 @@ class WebTester:
                                     self.__json_output["test_result"]["test_passed"] = message.value == element.get_attribute('value')
                                     self.__json_output["test_result"]["expected_value"] = element.get_attribute('value')
                                     self.__json_output["test_result"]["actual_value"] = message.value
-                                    self.__json_output["test_result"]["error_message"] = "null"
+                                    self.__json_output["test_result"]["error_message"] = ""
 
                                     if message.value != element.get_attribute("value"):
                                         # Test failure
@@ -420,8 +420,8 @@ class WebTester:
                                         0, f"Invalid message type: {message.message_type}")
                                     self.__json_output["test_result"]["message_type"] = message.message_type
                                     self.__json_output["test_result"]["test_passed"] = False
-                                    self.__json_output["test_result"]["expected_value"] = "null"
-                                    self.__json_output["test_result"]["actual_value"] = "null"
+                                    self.__json_output["test_result"]["expected_value"] = ""
+                                    self.__json_output["test_result"]["actual_value"] = ""
                                     self.__json_output["test_result"]["error_message"] = f"Invalid message type: {message.message_type}"
                                     test_error_num += 1
                                 WebTester.log(
@@ -519,8 +519,8 @@ class WebTester:
                         1, f"default_value = {field.default_value}")
                     field_json["default_value"] = field.default_value
                 else:
-                    field_json["default_index"] = "null"
-                    field_json["default_value"] = "null"
+                    field_json["default_index"] = ""
+                    field_json["default_value"] = ""
                 WebTester.log(1, f"text = {field.text}")
                 field_json["text"] = field.text
                 WebTester.log(
@@ -821,8 +821,8 @@ class WebTester:
         WebTester.log(
             1, "-----------------------------------------------------")
         WebTester.log(
-            1, f"Total time: {datetime.datetime.now() - self.__start_time} s")
-        self.__json_output["total_time"] = {datetime.datetime.now() - self.__start_time}
+            1, f"Total time: {(datetime.datetime.now() - self.__start_time).seconds} s")
+        self.__json_output["total_time"] = (datetime.datetime.now() - self.__start_time).seconds
         WebTester.log(1, f"Finished at: {datetime.datetime.now()}")
         self.__json_output["finished_at"] = datetime.datetime.now()
         WebTester.log(

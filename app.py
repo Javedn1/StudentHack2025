@@ -48,4 +48,21 @@ def run_test():
         web_tester.run()
         web_tester_json_outputs.append(web_tester.get_json())
 
+    return render_template("./test_result/index.html", message=web_tester_json_outputs)
+
+#TODO: To be removed
+@app.route("/dummy", methods=["GET"])
+def dummy():
+    # Read web-testing-config.xml
+    xml_file_paths = read_xml_file_paths()  # Hardcoded
+
+    web_tester_json_outputs = []
+
+    # Run the code
+    # Multiple case
+    for xml_file_path in xml_file_paths:
+        web_tester = WebTester(xml_file_path)
+        web_tester.run()
+        web_tester_json_outputs.append(web_tester.get_json())
+
     return str(web_tester_json_outputs)

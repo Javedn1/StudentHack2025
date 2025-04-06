@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Testing Results</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #2e2e2e;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #212121;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #00bcd4;
+    }
+
+    .container {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .test-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #444;
+      padding-bottom: 15px;
+    }
+
+    .test-summary div {
+      flex: 1;
+      text-align: center;
+    }
+
+    .test-summary div h3 {
+      font-size: 1.5em;
+      margin-bottom: 5px;
+      color: #4caf50;
+    }
+
+    .test-summary div p {
+      font-size: 1.2em;
+      color: #b0bec5;
+    }
+
+    .test-result-table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+
+    .test-result-table th, .test-result-table td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    .test-result-table th {
+      background-color: #37474f;
+    }
+
+    .test-result-table td {
+      background-color: #455a64;
+    }
+
+    .test-result-table tr:nth-child(even) td {
+      background-color: #607d8b;
+    }
+
+    .status-passed {
+      color: #388e3c;
+    }
+
+    .status-failed {
+      color: #f44336;
+    }
+
+    .status-skipped {
+      color: #ff9800;
+    }
+
+    footer {
+      background: #212121;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    footer p {
+      color: #b0bec5;
+      font-size: 0.9em;
+    }
+
+    /* Simple responsive design */
+    @media (max-width: 768px) {
+      .test-summary {
+        flex-direction: column;
+      }
+
+      .test-summary div {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .test-result-table td, .test-result-table th {
+        padding: 10px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web Testing Results</h1>
+  </header>
+
+  {% for (test_result) in message %}
+    <div class="container">
+      <!-- Configuration Summary -->
+      <section>
+        <div>
+          <h2>Configuration Summary</h2>
+          <label>XML File Path: {{ test_result["xml_config"]["file_path"] }}</label>
+        </div>
+      </section>
+      <hr>
+      <!-- Test Summary Section -->
+      <section class="test-summary">
+        <h2>Test Summary</h2>
+        <div>
+          <h3>Total Tests</h3>
+          <p id="test-num">{{ test_result["stats"]["test_num"] }}</p>
+        </div>
+        <div>
+          <h3 style="color: red;">Failed Tests</h3>
+          <p id="test-failure-num">{{ test_result["stats"]["test_failure_num"] }}</p>
+        </div>
+        <div>
+          <h3 style="color: red;">Error Tests</h3>
+          <p id="test-error-num">{{ test_result["stats"]["test_error_num"] }}</p>
+        </div>
+        <div>
+          <h3 style="color: gray;">Skipped Tests</h3>
+          <p id="test-skipped-num">{{ test_result["stats"]["test_skipped_num"] }}</p>
+        </div>
+        <div>
+          <h3>Total Time</h3>
+          <p id="test-total-time">{{ test_result["total_time"] }}</p>
+        </div>
+      </section>
+
+      {% for webform in test_result["xml_config"]["webforms"] %}
+        <h3>Webform Summary</h3>
+        <div id="webform-summary-container">
+          <div>
+            <label>Target Website URL: {{ webform["url"] }}</label>
+          </div>
+          <div>
+            <label>Webform ID: {{ webform["form_id"] }}</label>
+          </div>
+          <div>
+            <label>Test Timeout: {{ webform["timeout"] }} seconds</label>
+          </div>
+          <div>
+            <label>Submission Timeout: {{ webform["submission_timeout"] }} seconds</label>
+          </div>
+          <div>
+            <label>Browsers</label>
+            <ul>
+              {% for browser in webform["browser"] %}
+                <li>browser</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        
+        <hr>
+        <!-- Field Table -->
+         <h3>Input Field</h3>
+         <table class="test-result-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Class</th>
+              <th>DOM Path</th>
+              <th>Type</th>
+              <th>Value</th>
+              <th>Default Index</th>
+              <th>Default Value</th>
+              <th>Text</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for field in webform["fields"] %}
+              <tr>
+                <td>{{ field["id"] }}</td>
+                <td>{{ field["name"] }}</td>
+                <td>{{ field["class"] }}</td>
+                <td>{{ field["xpath"] }}</td>
+                <td>{{ field["type"] }}</td>
+                <td>{{ field["value"] }}</td>
+                <td>{{ field["default_index"] }}</td>
+                <td>{{ field["default_value"] }}</td>
+                <td>{{ field["text"] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+         </table>
+
+         <hr>
+          <!-- Test Results Table -->
+          <section>
+            <h3>Test Results</h3>
+            <table class="test-result-table">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Language</th>
+                </tr>
+              </thead>
+              <tbody id="test-results">
+                {% for test in webform["tests"] %}
+                <tr>
+                  <td>{{ test["id"] }}</td>
+                  <td>{{ test["description"] }}</td>
+                  <td>{{ test["run"] }}</td>
+                  <td>{{ test["language"] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </section>
+    
+          <hr>
+          <!-- Testing Step -->
+          <section>
+            <h3>Testing Steps</h3>
+            <table class="test-result-table">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Access Method</th>
+                  <th>Access Key</th>
+                  <th>Access Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for test in webform["tests"] %}
+                  {% for step in test["steps"] %}
+                    <tr>
+                      <td>{{ test["id"] }}</td>
+                      <td>{{ step["access_by"] }}</td>
+                      <td>{{ step["key"] }}</td>
+                      <td>{{ step["value"] }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </section>
+
+          <hr>
+          <!-- Testing Messages -->
+          <section>
+            <h3>Actual Behaviour</h3>>
+            <table class="test-result-table">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Form Submission Related</th>
+                  <th>Access Method</th>
+                  <th>Access Key</th>
+                  <th>Language</th>
+                  <th>Type</th>
+                  <th>Text</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for test in webform["tests"] %}
+                  {% for expectation in test["expectations"] %}
+                    {% for message in expectation["messages"] %}
+                      <tr>
+                        <td>{{ test["id"] }}</td>
+                        <td>{{ expectation["form_submission"] }}</td>
+                        <td>{{ message["access_by"] }}</td>
+                        <td>{{ message["key"] }}</td>
+                        <td>{{ message["language"] }}</td>
+                        <td>{{ message["type"] }}</td>
+                        <td>{{ message["text"] }}</td>
+                        <td>{{ message["value"] }}</td>
+                      </tr>
+                    {% endfor %}
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </section>
+    </div>
+  {% endfor %}
+
+  <hr>
+  <!-- Error -->
+   <ul>
+    <h2 style="color: red;">Error Message</h2>
+    {% for error_message in test_result["errors"] %}
+      <li>{{ error_message }}</li>
+    {% endfor %}
+   </ul>
+{% endfor %}
+
+
+  <footer>
+    <p>&copy; StudentHack 2025. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
