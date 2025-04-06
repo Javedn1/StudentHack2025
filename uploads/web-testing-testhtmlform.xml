@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The xml file for all testings of the website testhtmlform.html
+-->
+<!DOCTYPE generic-web-testing SYSTEM "web-testing.dtd">
+<generic-web-testing version="1.0">
+    <!-- comma-separated, in testing order, case-insensitive -->
+    <!-- Chrome/Edge/Firefox/Safari -->
+    <webforms useragents="Chrome,Edge,Firefox">
+        <!-- formid means the id of <form>, not the id of <webform> -->
+        <webform url="http://localhost/UoM/Year%201/COMP10120/Selenium/index.html" formid="" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <field id="inputLoginID" class="" xpath="" type="text" value="" defaultindex="" defaultvalue=""></field>
+            </fieldset>
+            <tests>
+                <!-- description: compulsory, general, submission -->
+                <test id="1" description="general" run="true" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="id" key="inputLoginID" action="type" value="1234" />
+                    <expectation formsubmission="false">
+                        
+                    </expectation>
+                </test>
+                <test id="2" description="submission" run="true" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="id" key="inputLoginID" action="type" value="123" />
+                    <step accessby="id" key="inputSubmit" action="click" value="" />
+                    <expectation formsubmission="true">
+                        <message accessby="id" key="message" language="en" type="attribute">Hi</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+        <webform url="http://localhost/UoM/Year%201/COMP10120/Selenium/homepage.php" formid="" timeout="60" submissiontimeout="20" browsers="Chrome,Firefox,Edge"><!-- browsers or browser? -->
+            <fieldset>
+                <field id="inputClickMe" name="inputClickMe" class="" xpath="" type="button" value="" defaultindex="" defaultvalue=""></field>
+            </fieldset>
+            <tests>
+                <!-- description: compulsory, general, submission -->
+                <test id="1" description="general" run="true" language="en">
+                    <!-- action: click, type, select -->
+                    <step accessby="id" key="inputClickMe" action="click" value="" />
+                    <expectation formsubmission="false">
+                        <message accessby="id" key="hiddenMessage" language="en" type="attribute">You Clicked!</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+    </webforms>
+</generic-web-testing>

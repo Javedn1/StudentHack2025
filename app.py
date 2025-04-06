@@ -1,10 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from py_apps.main import read_xml_file_paths
 from py_apps.web_tester import WebTester
+import os
 
 xml_file_paths = []
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "uploads"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def index():
@@ -16,8 +20,24 @@ def build():
 
 @app.route("/run_test", methods=["POST"])
 def run_test():
+    if "files" not in request.files:
+        return f"No XML files uploaded"
+    
+    files = request.files.getlist("files")
+    if not files:
+        return f"No selected files"
+    
+    uploaded_files = []
+    for file in files:
+        if file and file.filename.endswith('.xml'):
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filename)
+            uploaded_files.append(filename)
+        else:
+            return "Invalid file format. Only XML files are allowed"
+
     # Read web-testing-config.xml
-    xml_file_paths = read_xml_file_paths()
+    xml_file_paths = read_xml_file_paths(file_path=uploaded_files[0], is_multiple_xml_files=False)  # Hardcoded
 
     web_tester_json_outputs = []
 

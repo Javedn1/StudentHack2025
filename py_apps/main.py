@@ -16,7 +16,7 @@ The file path of the xml file which contains all the testings and details for 1 
 # xml_file_path = "xml-docs/web-testing-testhtmlform.xml"
 
 
-def read_xml_file_paths(file_path="xml-docs/web-testing-config.xml"):
+def read_xml_file_paths(file_path="xml-docs/web-testing-config.xml", is_multiple_xml_files=True):
     """
     Read the xml configuration file "", which contains all the file path for xml files to be read by web tester
     :param: None
@@ -25,13 +25,17 @@ def read_xml_file_paths(file_path="xml-docs/web-testing-config.xml"):
     with open(file_path, "r") as f:
         file = f.read()
 
-    xml_reader = BeautifulSoup(file, "xml")
-    configuration_files = xml_reader.find_all("configuration-file")
+    if is_multiple_xml_files:
+        xml_reader = BeautifulSoup(file, "xml")
+        configuration_files = xml_reader.find_all("configuration-file")
 
-    for cf in configuration_files:
-        xml_file_paths.append(cf.text)
-    
-    return xml_file_paths
+        for cf in configuration_files:
+            xml_file_paths.append(cf.text)
+        
+        return xml_file_paths
+    else:
+        # Just 1 single configuration file
+        return [file_path]
 
 
 if __name__ == "__main__":
