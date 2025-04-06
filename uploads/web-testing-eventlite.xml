@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The xml file for all testings of the website eventlite
+-->
+<!DOCTYPE generic-web-testing SYSTEM "web-testing.dtd">
+<generic-web-testing version="1.0">
+    <!-- comma-separated, in testing order, case-insensitive -->
+    <!-- Chrome/Edge/Firefox/Safari -->
+    <webforms useragents="Chrome,Firefox">
+        <!-- formid means the id of <form>, not the id of <webform> -->
+        <webform url="http://127.0.0.1:8080/events" formid="events-form-1" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <!-- Fields used in search bar -->
+                <field id="keywords" name="keywords" type="text"></field>
+                <field xpath="//button[@type='submit']" type="button"></field>
+                
+                <!-- Fields for expected messages -->
+                <field xpath="//div[@id='msg']/span[1]" type="text" name="msg" />
+                
+                <!-- Fields for the event links (if necessary) -->
+                <field xpath="//a[@href='/events/create']" type="link" />
+                <field xpath="//a[@href='/events/create/1']" type="link" />
+                <field xpath="//a[@href='/events/create/2']" type="link" />
+                <field xpath="//a[@href='/events/create/3']" type="link" />
+                <field xpath="//a[@href='/events/create/4']" type="link" />
+                <field xpath="//a[@href='/events/create/5']" type="link" />
+                <field xpath="//a[@href='/events/create/6']" type="link" />
+            </fieldset>
+            <tests>
+                <test id="1" description="Search bar test: apple" run="true" language="en">
+                    <!-- action: type text into the search bar -->
+                    <step accessby="id" key="keywords" value="apple" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: should not submit form and show search results (message or no error) -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                    </expectation>
+                </test>
+                
+                <!-- Test 2: Search bar with empty input -->
+                <test id="2" description="Search bar test: empty input" run="true" language="en">
+                    <!-- action: type empty text into the search bar -->
+                    <step accessby="id" key="keywords" value="" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/1']" language="en" type="text">Event Previous</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/2']" language="en" type="text">Event Past</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/3']" language="en" type="text">Event Beta</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/5']" language="en" type="text">Event Former</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/6']" language="en" type="text">Event Alpha</message>
+                    </expectation>
+                </test>
+                <!-- Test 3: Search bar with event input -->
+                <test id="3" description="Search bar test: event" run="true" language="en">
+                    <!-- action: type empty text into the search bar -->
+                    <step accessby="id" key="keywords" value="event" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/1']" language="en" type="text">Event Previous</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/2']" language="en" type="text">Event Past</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/3']" language="en" type="text">Event Beta</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/5']" language="en" type="text">Event Former</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/6']" language="en" type="text">Event Alpha</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+        <webform url="http://127.0.0.1:8080/venues" formid="venues-form-1" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <!-- Fields used in search bar -->
+                <field id="keywords" name="keywords" type="text"></field>
+                <field xpath="//button[@type='submit']" type="button"></field>
+                
+                <!-- Fields for expected messages -->
+                <field xpath="//div[@id='msg']/span[1]" type="text" name="msg" />
+                
+                <!-- Fields for the event links (if necessary) -->
+                <field xpath="//a[@href='/venues/create']" type="link" />
+                <field xpath="//a[@href='/venues/create/1']" type="link" />
+                <field xpath="//a[@href='/venues/create/2']" type="link" />
+                <field xpath="//a[@href='/venues/create/3']" type="link" />
+            </fieldset>
+            <tests>
+                <test id="1" description="Search bar test: a" run="true" language="en">
+                    <step accessby="id" key="keywords" value="a" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: should not submit form and show search results (message or no error) -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Event Apple</message>
+                    </expectation>
+                </test>
+                
+                <!-- Test 2: Search bar with empty input -->
+                <test id="2" description="Search bar test: empty input" run="true" language="en">
+                    <step accessby="id" key="keywords" value="" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Venue A</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/2']" language="en" type="text">Venue B</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/3']" language="en" type="text">Venue C</message>
+                    </expectation>
+                </test>
+                <!-- Test 3: Search bar with venue input -->
+                <test id="3" description="Search bar test: venue" run="true" language="en">
+                    <step accessby="id" key="keywords" value="venue" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Venue A</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/2']" language="en" type="text">Venue B</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/3']" language="en" type="text">Venue C</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+        <webform url="http://127.0.0.1:8080/events" formid="events-form-2" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <!-- Fields used in search bar -->
+                <field id="keywords" name="keywords" type="text"></field>
+                <field xpath="//button[@type='submit']" type="button"></field>
+                
+                <!-- Fields for expected messages -->
+                <field xpath="//div[@id='msg']/span[1]" type="text" name="msg" />
+                
+                <!-- Fields for the event links (if necessary) -->
+                <field xpath="//a[@href='/events/create']" type="link" />
+                <field xpath="//a[@href='/events/create/1']" type="link" />
+                <field xpath="//a[@href='/events/create/2']" type="link" />
+                <field xpath="//a[@href='/events/create/3']" type="link" />
+                <field xpath="//a[@href='/events/create/4']" type="link" />
+                <field xpath="//a[@href='/events/create/5']" type="link" />
+                <field xpath="//a[@href='/events/create/6']" type="link" />
+            </fieldset>
+            <tests>
+                <test id="1" description="Search bar test: apple" run="true" language="en">
+                    <!-- action: type text into the search bar -->
+                    <step accessby="id" key="keywords" value="apple" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: should not submit form and show search results (message or no error) -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                    </expectation>
+                </test>
+                
+                <!-- Test 2: Search bar with empty input -->
+                <test id="2" description="Search bar test: empty input" run="true" language="en">
+                    <!-- action: type empty text into the search bar -->
+                    <step accessby="id" key="keywords" value="" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/1']" language="en" type="text">Event Previous</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/2']" language="en" type="text">Event Past</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/3']" language="en" type="text">Event Beta</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/5']" language="en" type="text">Event Former</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/6']" language="en" type="text">Event Alpha</message>
+                    </expectation>
+                </test>
+                <!-- Test 3: Search bar with event input -->
+                <test id="3" description="Search bar test: event" run="true" language="en">
+                    <!-- action: type empty text into the search bar -->
+                    <step accessby="id" key="keywords" value="event" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/events/create/1']" language="en" type="text">Event Previous</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/2']" language="en" type="text">Event Past</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/3']" language="en" type="text">Event Beta</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/4']" language="en" type="text">Event Apple</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/5']" language="en" type="text">Event Former</message>
+                        <message accessby="xpath" key="//a[@href='/events/create/6']" language="en" type="text">Event Alpha</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+        <webform url="http://127.0.0.1:8080/venues" formid="venues-form-2" timeout="60" submissiontimeout="20"><!-- browsers or browser? -->
+            <fieldset>
+                <!-- Fields used in search bar -->
+                <field id="keywords" name="keywords" type="text"></field>
+                <field xpath="//button[@type='submit']" type="button"></field>
+                
+                <!-- Fields for expected messages -->
+                <field xpath="//div[@id='msg']/span[1]" type="text" name="msg" />
+                
+                <!-- Fields for the event links (if necessary) -->
+                <field xpath="//a[@href='/venues/create']" type="link" />
+                <field xpath="//a[@href='/venues/create/1']" type="link" />
+                <field xpath="//a[@href='/venues/create/2']" type="link" />
+                <field xpath="//a[@href='/venues/create/3']" type="link" />
+            </fieldset>
+            <tests>
+                <test id="1" description="Search bar test: a" run="true" language="en">
+                    <step accessby="id" key="keywords" value="a" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: should not submit form and show search results (message or no error) -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Event Apple</message>
+                    </expectation>
+                </test>
+                
+                <!-- Test 2: Search bar with empty input -->
+                <test id="2" description="Search bar test: empty input" run="true" language="en">
+                    <step accessby="id" key="keywords" value="" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Venue A</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/2']" language="en" type="text">Venue B</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/3']" language="en" type="text">Venue C</message>
+                    </expectation>
+                </test>
+                <!-- Test 3: Search bar with venue input -->
+                <test id="3" description="Search bar test: venue" run="true" language="en">
+                    <step accessby="id" key="keywords" value="venue" />
+                    <step accessby="xpath" key="//button[@type='submit']" value="" />
+                    <!-- expectation: show error message indicating required input -->
+                    <expectation formsubmission="false">
+                        <message accessby="xpath" key="//a[@href='/venues/create/1']" language="en" type="text">Venue A</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/2']" language="en" type="text">Venue B</message>
+                        <message accessby="xpath" key="//a[@href='/venues/create/3']" language="en" type="text">Venue C</message>
+                    </expectation>
+                </test>
+            </tests>
+        </webform>
+    </webforms>
+</generic-web-testing>

@@ -86,7 +86,7 @@ class WebTester:
         2 - [TEST]
         3 - [EXPECTATION]
         """
-        if not enabled:
+        if mode != 0 and not enabled:
             return
 
         # The final message to be printed
@@ -253,8 +253,11 @@ class WebTester:
                     self.init_webdriver(
                         browser, webform.url, webform.timeout)
 
+                    print(f"Before: self.__last_url: {self.__last_url}; current_url: {self.__web_driver.current_url}")
                     # Set last_url
                     self.__last_url = self.__web_driver.current_url
+                    print(f"After: self.__last_url: {self.__last_url}; current_url: {self.__web_driver.current_url}")
+                    print(f"\n")
 
                     # Set last_browser
                     self.__last_browser = browser
@@ -592,13 +595,13 @@ class WebTester:
                             1, "=====================================================")
                         expectation_json["messages"].append(message_json)
 
+                    test_json["expectations"].append(expectation_json)
                 WebTester.log(
                     1, "=====================================================")
-                test_json["expectations"].append(expectation_json)
 
+                webform_json["tests"].append(test_json)
             WebTester.log(
                 1, "=====================================================")
-            webform_json["tests"].append(test_json)
         self.__json_output["xml_config"]["webforms"].append(webform_json)
 
     @staticmethod
