@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from py_apps.main import read_xml_file_paths
 from py_apps.web_tester import WebTester
 import os
@@ -49,6 +49,10 @@ def run_test():
         web_tester_json_outputs.append(web_tester.get_json())
 
     return render_template("./test_result/index.html", message=web_tester_json_outputs)
+
+@app.route("/template_file", methods=["GET"])
+def template_file():
+    return send_file("./templates/template_file/template.xml")
 
 #TODO: To be removed
 @app.route("/dummy", methods=["GET"])
