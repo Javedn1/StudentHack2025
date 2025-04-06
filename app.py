@@ -2,6 +2,12 @@ from flask import Flask, render_template, request, send_file
 from py_apps.main import read_xml_file_paths
 from py_apps.web_tester import WebTester
 import os
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+CHATGPT_KEY = os.getenv('CHATGPT_KEY')
 
 xml_file_paths = []
 
@@ -49,7 +55,6 @@ def run_test():
         web_tester_json_outputs.append(web_tester.get_json())
     
     # Fetch advice from AI
-    #TODO: id=prompt-textarea
 
     return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message="")
 
