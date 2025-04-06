@@ -50,15 +50,6 @@ def run_test():
 
     return render_template("./test_result/index.html", message=web_tester_json_outputs)
 
-@app.route("/template_file", methods=["GET"])
-def template_file():
-    file = open("./templates/template_file/template.xml", "rt")
-    TEMPLATE_XML_FILE = file.read()
-    
-    print(TEMPLATE_XML_FILE)
-
-    return TEMPLATE_XML_FILE
-
 #TODO: To be removed
 @app.route("/dummy", methods=["GET"])
 def dummy():
