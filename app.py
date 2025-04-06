@@ -4,10 +4,13 @@ from py_apps.web_tester import WebTester
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+import base64
+from google import genai
+from google.genai import types
 
 load_dotenv()
 
-CHATGPT_KEY = os.getenv('CHATGPT_KEY')
+GEMINI_API_KEY = os.getenv('AI_KEY')
 
 xml_file_paths = []
 
@@ -55,8 +58,34 @@ def run_test():
         web_tester_json_outputs.append(web_tester.get_json())
     
     # Fetch advice from AI
+    print(f"API_KEY: {GEMINI_API_KEY}")
+    client = genai.Client(
+        api_key=GEMINI_API_KEY,
+    )
 
-    return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message="")
+    model = "gemini-2.0-flash-thinking-exp-01-21"
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=f"With the given json output from a testing, provide a short feedback: {web_tester_json_outputs}"),
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        response_mime_type="text/plain",
+    )
+
+    ai_response = ""
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        print(chunk.text, end="")
+        ai_response += chunk.text
+
+    return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message=ai_response)
 
 @app.route("/template_file", methods=["GET"])
 def template_file():
