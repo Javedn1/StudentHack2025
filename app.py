@@ -14,8 +14,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
     return render_template("index.html")
 
-@app.route("/build")
-def build():
+@app.route("/build_xml")
+def build_xml():
     return render_template("build_xml/index.html")
 
 @app.route("/run_test", methods=["POST"])

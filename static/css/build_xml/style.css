@@ -18,27 +18,10 @@ body {
     overflow-y: auto;
 }
 
-.container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 30px;
-    background: #1a1a1a;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    overflow-y: auto;
-    height: 100%;
-    max-height: 95vh;
-    overflow-x: hidden;
-}
-
-h1 {
+h2 {
     font-size: 2.5rem;
-    color: cyan;
+    color: rgb(0, 255, 30);
     text-align: center;
-    margin-bottom: 20px;
-}
-
-.form-section {
     margin-bottom: 20px;
 }
 
@@ -60,7 +43,7 @@ input {
     font-size: 1rem;
 }
 
-button[type="button"],
+/* button[type="button"],
 button[type="submit"] {
     background-color: cyan;
     border: none;
@@ -81,7 +64,7 @@ button[type="button"] {
 
 button[type="button"]:hover {
     background-color: #444;
-}
+} */
 
 #generated-xml-container {
     margin-top: 20px;
@@ -97,30 +80,59 @@ pre {
     border-radius: 5px;
     overflow-x: auto;
     font-family: 'Courier New', Courier, monospace;
+    max-width: 85vw;
 }
 
-#add-field-btn-1,
-#add-test-btn-1,
-#add-step-btn-1 {
-    background: cyan;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    margin-top: 10px;
-}
-
-.remove-field-btn,
-.remove-test-btn,
-.remove-step-btn {
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
+/* Basic reset for buttons */
+.btn {
+    background: linear-gradient(45deg, #0a74da, #ff7a18); /* Gradient background */
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 50px; /* Rounded corners */
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out; /* Smooth transition */
+    outline: none;
 }
 
-.remove-field-btn:hover,
-.remove-test-btn:hover,
-.remove-step-btn:hover {
-    background-color: #d32f2f;
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.5s ease-in-out;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn:hover {
+    background: linear-gradient(45deg, #ff7a18, #0a74da); /* Reverse gradient on hover */
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px); /* Slightly lift the button on hover */
+}
+
+.btn:hover::before {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+}
+
+.btn:active {
+    transform: translateY(2px); /* Slight depression effect */
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* Neon-like glow effect on focus */
 }

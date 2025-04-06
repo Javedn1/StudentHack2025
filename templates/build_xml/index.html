@@ -7,97 +7,129 @@
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/build_xml/style.css') }}">
 </head>
 <body>
+    <script src="{{ url_for('static', filename='js/build_xml/script.js') }}"></script>
     <div class="root">
         <h1>XML Configuration Generator</h1>
         
-        <form id="xml-configuration-container">
+        <div id="xml-configuration-container">
             <div id="webform-container">
+                <h2>Webform</h2>
                 <div id="url-container">
-
+                    <label for="url">URL: </label>
+                    <input id="url" name="url" type="url" placeholder="www.example.com" >
                 </div>
                 <div id="form-id-container">
-
+                    <label for="form-id">Form ID: </label>
+                    <input id="form-id" name="form-id" type="text" placeholder="formID" >
                 </div>
                 <div id="timeout-container">
-
+                    <label for="timeout">Timeout: </label>
+                    <input id="timeout" name="timeout" type="number" value="60" min="1" required >
                 </div>
                 <div id="submission-timeout-container">
-
+                    <label for="submission-timeout">Submission Timeout: </label>
+                    <input id="submission-timeout" name="submission-timeout" type="number" value="20" min="1" required >
                 </div>
                 <div id="fields-container">
                     <div id="field-container">
+                        <h2>Field</h2>
                         <div id="field-id-container">
-
+                            <label for="field-id">Field ID: </label>
+                            <input id="field-id" name="field-id" type="text" placeholder="Field id" >
                         </div>
                         <div id="field-class-container">
-
+                            <label for="field-class">Field Class: </label>
+                            <input id="field-class" name="field-class" type="text" placeholder="Field class" >
                         </div>
                         <div id="field-xpath-container">
-
+                            <label for="field-xpath">Field Path: </label>
+                            <input id="field-xpath" name="field-xpath" type="text" placeholder="Field relative path" >
                         </div>
                         <div id="field-type-container">
-
+                            <label for="field-type">Field Type: </label>
+                            <input id="field-type" name="field-type" type="text" placeholder="Field type" >
                         </div>
                         <div id="field-value-container">
-
+                            <label for="field-value">Field Value: </label>
+                            <input id="field-value" name="field-value" type="text" placeholder="Field value" >
                         </div>
                         <div id="default-index-container">
-
+                            <label for="default-index">Default Index: </label>
+                            <input id="default-index" name="default-index" type="text" placeholder="Default index" >
                         </div>
                         <div id="default-value-container">
-
+                            <label for="default-value">Default Value: </label>
+                            <input id="default-value" name="default-value" type="text" placeholder="Default value" >
                         </div>
                     </div>
                 </div>
 
                 <!-- Tests -->
                 <div id="tests-container">
+                    <h2>Test</h2>
                     <div id="test-container">
                         <div id="test-id-container">
-
+                            <label for="test-id">Test ID: </label>
+                            <input id="test-id" name="test-id" type="number" min="1" value="1" required >
                         </div>
                         <div id="test-description-container">
-
+                            <label for="test-description">Test Description: </label>
+                            <input id="test-description" name="test-description" type="text" >
                         </div>
                         <div id="test-run-container">
-
+                            <label for="test-run">Enable: </label>
+                            <input id="test-run" name="test-run" type="text" value="true" required >
                         </div>
                         <div id="test-language-container">
-
+                            <label for="test-language">Language: </label>
+                            <input id="test-language" name="test-language" type="text" value="en" required >
                         </div>
                         <div id="steps-container">
+                            <h2>Test Step</h2>
                             <div id="step-container">
                                 <div id="step-accessby-container">
-
+                                    <label for="step-accessby">Step Access Method: </label>
+                                    <input id="step-accessby" name="step-accessby" type="text" value="id" required >
                                 </div>
                                 <div id="step-key-container">
-
+                                    <label for="step-key">Step Key: </label>
+                                    <input id="step-key" name="step-key" type="text" placeholder="Key to take step" >
                                 </div>
                                 <div id="step-action-container">
-
+                                    <label for="step-action">Step Action: </label>
+                                    <input id="step-action" name="step-action" type="text" value="type" placeholder="Action to take step" required >
                                 </div>
                                 <div id="value-container">
-
+                                    <label for="step-value">Step Value: </label>
+                                    <input id="step-value" name="step-value" type="text" placeholder="Value to be updated by step" >
                                 </div>
                                 <div id="expectation-container">
+                                    <h2>Expected Observation</h2>
                                     <div id="expectation-formsubmission-container">
-
+                                        <label for="expectation-formsubmission">Submit Form: </label>
+                                        <input id="expectation-formsubmission" name="expectation-formsubmission" type="text" placeholder="Whether a form is submitted" >
                                     </div>
                                     <div id="message-container">
+                                        <h2>Message</h2>
                                         <div id="message-accessby-container">
-
+                                            <label for="message-accessby">Expected Message Access Method: </label>
+                                            <input id="message-accessby" name="message-accessby" type="text" placeholder="The access method of the expected message" >
                                         </div>
                                         <div id="message-key-container">
-
+                                            <label for="message-key">Expected Message Access Key: </label>
+                                            <input id="message-key" name="message-key" type="text" placeholder="The access key of the expected message" >
                                         </div>
                                         <div id="message-language-container">
-
+                                            <label for="message-language">Expected Message Access Language: </label>
+                                            <input id="message-language" name="message-language" type="text" value="en" placeholder="The access method of the expected message" required >
                                         </div>
                                         <div id="message-type-container">
-
+                                            <label for="message-type">Expected Message Type: </label>
+                                            <input id="message-type" name="message-type" type="text" placeholder="The message type" >
                                         </div>
                                         <div id="message-value-container">
-
+                                            <label for="message-value">Expected Message Value: </label>
+                                            <input id="message-value" name="message-value" type="text" placeholder="The value of the expected message" >
                                         </div>
                                     </div>
                                 </div>
@@ -106,15 +138,14 @@
                     </div>
                 </div>
             </div>
-        </form>
+            <button class="btn" onclick="generateXML();">Generate XML</button>
+        </div>
 
         <div id="generated-xml-container">
             <h2>Generated XML</h2>
             <pre id="generated-xml"></pre>
-            <button id="copy-xml-btn">Copy XML</button>
+            <button class="btn" id="copy-xml" onclick="copy();">Copy XML</button>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/build_xml/script.js') }}"></script>
 </body>
 </html>
