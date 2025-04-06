@@ -47,6 +47,9 @@ def run_test():
         web_tester = WebTester(xml_file_path)
         web_tester.run()
         web_tester_json_outputs.append(web_tester.get_json())
+    
+    # Fetch advice from AI
+    #TODO: id=prompt-textarea
 
     return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message="")
 
