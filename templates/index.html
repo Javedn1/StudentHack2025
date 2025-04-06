@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>StudentHack 2025</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <div id="background"></div>
@@ -23,25 +22,96 @@
         </form>
     </div>
 
-    <script>
-        // Setting up Three.js
+    <script type="module">
+        import * as THREE from "https://web.cs.manchester.ac.uk/three/three.js-master/build/three.module.js";
+        import { OrbitControls } from "https://web.cs.manchester.ac.uk/three/three.js-master/examples/jsm/controls/OrbitControls.js";
+
+        // Set up Three.js scene, camera, and renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('background').appendChild(renderer.domElement);
 
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-        const cube = new THREE.Mesh(geometry, material);
+        // Orbit Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // Add Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 1);  // Soft white light
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0x00ff00, 2, 100); // Green point light
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        // Add a Rotating Cube
+        const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
         scene.add(cube);
 
+        // Add a Rotating Torus Knot (futuristic look)
+        const torusGeometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+        const torusMaterial = new THREE.MeshStandardMaterial({ color: 0x00ccff, emissive: 0x00ffcc });
+        const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+        torus.position.set(3, 0, 0);
+        scene.add(torus);
+
+        // Add Spheres
+        const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0044, emissive: 0xff6699 });
+        const sphere1 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere1.position.set(-3, 1, 0);
+        scene.add(sphere1);
+        const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere2.position.set(-3, -1, 0);
+        scene.add(sphere2);
+
+        // Add Particle System
+        const particleCount = 5000;
+        const particles = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3] = Math.random() * 20 - 10;
+            positions[i * 3 + 1] = Math.random() * 20 - 10;
+            positions[i * 3 + 2] = Math.random() * 20 - 10;
+        }
+        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const particleMaterial = new THREE.PointsMaterial({ color: 0x00ff99, size: 0.1 });
+        const particleSystem = new THREE.Points(particles, particleMaterial);
+        scene.add(particleSystem);
+
+        // Camera position
         camera.position.z = 5;
 
+        // Mouse Interactivity
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Animate the scene
         function animate() {
             requestAnimationFrame(animate);
+
+            // Rotating Cube and Torus
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.01;
+
+            // Rotating Particle System
+            particleSystem.rotation.y += 0.001;
+
+            // Mouse interactivity (camera position)
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            // Update controls and render
+            controls.update();
             renderer.render(scene, camera);
         }
 
