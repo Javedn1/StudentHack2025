@@ -4,6 +4,7 @@ The main challenge of StudentHack2025
 ## Note
 - Unfortunately, my laptop is too **laggy** to submit a recording (my apologies)
 - Note that you will not be able to use ```xml-doc/web-testing-eventlite.xml``` to run the programme (please upload ```xml-doc/web-testing-epublication.xml``` instead to try the programme). This is because ```xml-doc/web-testing-eventlite.xml``` is testing Year 2 Software Engineering 2 COMP23412 Project EventLite and the source code is not uploaded for school's security
+- Note that you will not be able to see the AI feature because it requires API_KEY, which is not pushed to the respository. Thus, in this demo, this feature is removed but most of the remaining features work fine
 
 ## To run the programme
 ```
