@@ -48,7 +48,7 @@ def run_test():
         web_tester.run()
         web_tester_json_outputs.append(web_tester.get_json())
 
-    return render_template("./test_result/index.html", message=web_tester_json_outputs)
+    return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message="")
 
 @app.route("/template_file", methods=["GET"])
 def template_file():
