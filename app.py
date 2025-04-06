@@ -58,7 +58,6 @@ def run_test():
         web_tester_json_outputs.append(web_tester.get_json())
     
     # Fetch advice from AI
-    print(f"API_KEY: {GEMINI_API_KEY}")
     client = genai.Client(
         api_key=GEMINI_API_KEY,
     )
@@ -82,8 +81,7 @@ def run_test():
         contents=contents,
         config=generate_content_config,
     ):
-        print(f"chunk_test: {chunk.text}", end="")
-        ai_response += chunk.text
+        ai_response += chunk.text  # It is similar to buffer where each chunk has a limited size and when combined, these chunks form a sentence
 
     return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message=ai_response)
 
