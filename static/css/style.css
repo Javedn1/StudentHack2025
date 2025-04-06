@@ -1,80 +1,98 @@
-/* Global Styles */
+/* global.css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #101010;
-    color: #ffffff;
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
     overflow: hidden;
 }
 
-h1, h2 {
-    font-size: 3em;
-    letter-spacing: 2px;
-    text-align: center;
-    color: #0aff99;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    text-shadow: 0px 0px 20px #00ff99, 0px 0px 40px #00ff99, 0px 0px 60px #00ff99;
-}
-
-p {
-    text-align: center;
-    font-size: 1.2em;
-    margin-bottom: 1rem;
-    color: #aaa;
-}
-
-a {
-    color: #0aff99;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #fff;
-}
-
-/* Upload form styles */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2rem;
-}
-
-label {
-    font-size: 1.2em;
-    margin-bottom: 0.5rem;
-    color: #aaa;
-}
-
-input[type="file"], input[type="submit"] {
-    background-color: #0aff99;
-    border: none;
-    color: #101010;
-    font-size: 1.1em;
-    padding: 0.8em 2em;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    transition: 0.3s ease;
-}
-
-input[type="file"]:hover, input[type="submit"]:hover {
-    background-color: #00cc7a;
-}
-
+/* The background div that holds the 3D scene */
 #background {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
+    width: 100%;
+    height: 100%;
+    z-index: -0.1;
+}
+
+/* Main content container */
+#content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 80%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+#content h1 {
+    font-size: 36px;
+    color: #ffcc00;
+    margin-bottom: 20px;
+}
+
+#content h2 {
+    font-size: 24px;
+    color: #66ccff;
+    margin-bottom: 10px;
+}
+
+#content p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    margin-top: 20px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+form label {
+    font-size: 18px;
+    color: #fff;
+}
+
+form input[type="file"] {
+    margin: 10px 0;
+}
+
+form input[type="submit"] {
+    background-color: #ffcc00;
+    border: none;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ff9933;
 }

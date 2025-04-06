@@ -10,11 +10,11 @@
 <body>
     <div id="background"></div>
     <div id="content">
-        <h1>Web Tester</h1>
-        <p>An app to automate your web development and testing</p>
-        <p>Feeling tired of writing your own configuration file? Get a template file <a href="./template_file/template.xml" target="_blank">here</a> or create your own file <a href="./build_xml" target="_blank">here</a></p>
+        <h1>Automation Web Tester</h1>
+        <p>Introducing <b>Automation Web Tester</b> - the ultimate solution to streamline and <strong>automate</strong> your web development and testing process. Say goodbye to manual configurations and repetitive tasks. With Automation Web Tester, you can effortlessly test and validate your web applications, saving time and reducing errors. Whether you're a developer, QA engineer, or team leader, our intuitive platform provides the tools you need to ensure your web projects are flawless and efficient. Get started today and boost your productivity with automated testing at your fingertips.</p>
+        <h3>View template <a target="_blank" href="./template_file">here</a></h3>
+        <h3>Generate your customised configuration file <a target="_blank" href="./build_xml">here</a></h3>
         
-        <h2>Upload XML Files</h2>
         <form action="/run_test" method="POST" enctype="multipart/form-data">
             <label for="files">Choose XML files:</label>
             <input type="file" id="files" name="files" accept=".xml" multiple required>
@@ -37,9 +37,9 @@
         const controls = new OrbitControls(camera, renderer.domElement);
 
         // Add Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040, 1);  // Soft white light
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.3);  // Soft white light
         scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0x00ff00, 2, 100); // Green point light
+        const pointLight = new THREE.PointLight(0x00ff00, 0.5, 50); // Green point light
         pointLight.position.set(5, 5, 5);
         scene.add(pointLight);
 
@@ -51,14 +51,14 @@
 
         // Add a Rotating Torus Knot (futuristic look)
         const torusGeometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-        const torusMaterial = new THREE.MeshStandardMaterial({ color: 0x00ccff, emissive: 0x00ffcc });
+        const torusMaterial = new THREE.MeshStandardMaterial({ color: 0x53ffff, emissive: 0x000000 });
         const torus = new THREE.Mesh(torusGeometry, torusMaterial);
         torus.position.set(3, 0, 0);
         scene.add(torus);
 
         // Add Spheres
         const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-        const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0044, emissive: 0xff6699 });
+        const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x00757D, emissive: 0x00cf00 });
         const sphere1 = new THREE.Mesh(sphereGeometry, sphereMaterial);
         sphere1.position.set(-3, 1, 0);
         scene.add(sphere1);
@@ -77,7 +77,7 @@
         }
         particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-        const particleMaterial = new THREE.PointsMaterial({ color: 0x00ff99, size: 0.1 });
+        const particleMaterial = new THREE.PointsMaterial({ color: 0x00757D, size: 0.1 });
         const particleSystem = new THREE.Points(particles, particleMaterial);
         scene.add(particleSystem);
 

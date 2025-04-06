@@ -52,7 +52,12 @@ def run_test():
 
 @app.route("/template_file", methods=["GET"])
 def template_file():
-    return render_template("./template_file/template.xml")
+    file = open("./templates/template_file/template.xml", "rt")
+    TEMPLATE_XML_FILE = file.read()
+    
+    print(TEMPLATE_XML_FILE)
+
+    return TEMPLATE_XML_FILE
 
 #TODO: To be removed
 @app.route("/dummy", methods=["GET"])
