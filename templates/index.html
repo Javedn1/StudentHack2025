@@ -8,13 +8,13 @@
 <body>
    <h1>Web Tester</h1>
    <p>An app to automate your web development and testing</p>
-   <p>Feeling tired of writing your own configuration file? Get a template file or create your own file here</p>
+   <p>Feeling tired of writing your own configuration file? Get a template file or create your own file <a href="./build_xml/index.html" target="_blank">here</a></p>
    
    <h2>Upload XML Files</h2>
    <form action="/run_test" method="POST" enctype="multipart/form-data">
        <label for="files">Choose XML files:</label>
        <input type="file" id="files" name="files" accept=".xml" multiple required>
-       <button type="submit">Upload</button>
+       <input type="submit" value="Upload">
    </form>
    
 </body>
