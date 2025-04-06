@@ -16,13 +16,12 @@ The file path of the xml file which contains all the testings and details for 1 
 # xml_file_path = "xml-docs/web-testing-testhtmlform.xml"
 
 
-def read_xml_file_paths():
+def read_xml_file_paths(file_path="xml-docs/web-testing-config.xml"):
     """
     Read the xml configuration file "", which contains all the file path for xml files to be read by web tester
     :param: None
     :return: None
     """
-    file_path = "xml-docs/web-testing-config.xml"
     with open(file_path, "r") as f:
         file = f.read()
 

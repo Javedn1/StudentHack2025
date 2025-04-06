@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Configuration Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/build_xml/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>XML Configuration Generator</h1>
+        <form id="xmlForm">
+            <div class="form-section">
+                <label for="version">Version</label>
+                <input type="text" id="version" value="1.0" placeholder="Enter version">
+            </div>
+
+            <div class="form-section">
+                <label for="useragents">User Agents (Comma Separated)</label>
+                <input type="text" id="useragents" value="Chrome,Edge,Firefox,Safari" placeholder="Enter user agents">
+            </div>
+
+            <div id="webforms">
+                <div class="webform" id="webform-1">
+                    <h2>Webform 1</h2>
+                    <div class="form-section">
+                        <label for="url-1">URL</label>
+                        <input type="url" id="url-1" placeholder="Enter URL">
+                    </div>
+                    <div class="form-section">
+                        <label for="formid-1">Form ID</label>
+                        <input type="text" id="formid-1" placeholder="Enter form ID">
+                    </div>
+                    <div class="form-section">
+                        <label for="timeout-1">Timeout</label>
+                        <input type="number" id="timeout-1" value="60" placeholder="Enter timeout">
+                    </div>
+                    <div class="form-section">
+                        <label for="submissiontimeout-1">Submission Timeout</label>
+                        <input type="number" id="submissiontimeout-1" value="20" placeholder="Enter submission timeout">
+                    </div>
+
+                    <div class="fieldset-section">
+                        <h3>Fieldset</h3>
+                        <div class="field-section" id="fieldset-1">
+                            <input type="text" placeholder="Field ID" class="field-id">
+                            <input type="text" placeholder="Field Name" class="field-name">
+                            <input type="text" placeholder="Field Type" class="field-type">
+                            <button type="button" class="remove-field-btn">Remove Field</button>
+                        </div>
+                        <button type="button" id="add-field-btn-1">Add Field</button>
+                    </div>
+
+                    <div class="tests-section">
+                        <h3>Tests</h3>
+                        <div class="test-section" id="test-1">
+                            <label for="test-description-1">Test Description</label>
+                            <input type="text" id="test-description-1" placeholder="Enter test description">
+                            
+                            <label for="test-language-1">Test Language</label>
+                            <input type="text" id="test-language-1" value="en" placeholder="Enter language">
+
+                            <div class="steps-section">
+                                <h4>Steps</h4>
+                                <div class="step-section" id="step-1">
+                                    <input type="text" placeholder="Step Access By" class="step-accessby">
+                                    <input type="text" placeholder="Step Key" class="step-key">
+                                    <input type="text" placeholder="Step Value" class="step-value">
+                                    <button type="button" class="remove-step-btn">Remove Step</button>
+                                </div>
+                                <button type="button" id="add-step-btn-1">Add Step</button>
+                            </div>
+
+                            <button type="button" class="remove-test-btn">Remove Test</button>
+                        </div>
+                        <button type="button" id="add-test-btn-1">Add Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="generate-xml-btn">Generate XML</button>
+        </form>
+
+        <div id="generated-xml-container">
+            <h2>Generated XML</h2>
+            <pre id="generated-xml"></pre>
+            <button id="download-xml-btn">Download XML</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/build_xml/script.js') }}"></script>
+</body>
+</html>

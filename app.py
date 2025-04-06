@@ -6,9 +6,13 @@ xml_file_paths = []
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
+
+@app.route("/build")
+def build():
+    return render_template("build_xml/index.html")
 
 # TODO: Remove GET
 @app.route("/test", methods=["POST", "GET"])
