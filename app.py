@@ -58,30 +58,31 @@ def run_test():
         web_tester_json_outputs.append(web_tester.get_json())
     
     # Fetch advice from AI
-    client = genai.Client(
-        api_key=GEMINI_API_KEY,
-    )
+    # Cannot be done on demo
+    # client = genai.Client(
+    #     api_key=GEMINI_API_KEY,
+    # )
 
-    model = "gemini-2.0-flash-thinking-exp-01-21"
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part.from_text(text=f"With the given json output from a testing, provide a short feedback: {web_tester_json_outputs}"),
-            ],
-        ),
-    ]
-    generate_content_config = types.GenerateContentConfig(
-        response_mime_type="text/plain",
-    )
+    # model = "gemini-2.0-flash-thinking-exp-01-21"
+    # contents = [
+    #     types.Content(
+    #         role="user",
+    #         parts=[
+    #             types.Part.from_text(text=f"With the given json output from a testing, provide a short feedback: {web_tester_json_outputs}"),
+    #         ],
+    #     ),
+    # ]
+    # generate_content_config = types.GenerateContentConfig(
+    #     response_mime_type="text/plain",
+    # )
 
     ai_response = ""
-    for chunk in client.models.generate_content_stream(
-        model=model,
-        contents=contents,
-        config=generate_content_config,
-    ):
-        ai_response += chunk.text  # It is similar to buffer where each chunk has a limited size and when combined, these chunks form a sentence
+    # for chunk in client.models.generate_content_stream(
+    #     model=model,
+    #     contents=contents,
+    #     config=generate_content_config,
+    # ):
+    #     ai_response += chunk.text  # It is similar to buffer where each chunk has a limited size and when combined, these chunks form a sentence
 
     return render_template("./test_result/index.html", test_data=web_tester_json_outputs, ai_message=ai_response)
 
