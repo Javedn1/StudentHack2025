@@ -139,7 +139,7 @@
             <tests>
                 <test id="1" description="Search bar test: apple" run="true" language="en">
                     <!-- action: type text into the search bar -->
-                    <step accessby="id" key="keywords" value="apple" />
+                    <step accessby="id" key="keywords" value="Event Apple" />
                     <step accessby="xpath" key="//button[@type='submit']" value="" />
                     <!-- expectation: should not submit form and show search results (message or no error) -->
                     <expectation formsubmission="false">
@@ -196,7 +196,7 @@
             </fieldset>
             <tests>
                 <test id="1" description="Search bar test: a" run="true" language="en">
-                    <step accessby="id" key="keywords" value="a" />
+                    <step accessby="id" key="keywords" value="Venue A" />
                     <step accessby="xpath" key="//button[@type='submit']" value="" />
                     <!-- expectation: should not submit form and show search results (message or no error) -->
                     <expectation formsubmission="false">
