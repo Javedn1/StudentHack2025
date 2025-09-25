@@ -5,7 +5,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 import base64
-from google import genai
+import google.generativeai as genai
 from google.genai import types
 
 load_dotenv()
